@@ -341,6 +341,11 @@ nav li a.active {
   border-bottom: 1px solid #eee;
   background: #eee;
 }
+#kontrib h4 {
+font-family: "Open Sans", sans-serif;
+  font-style: oblique;
+}
+
 .grid-kontrib {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
