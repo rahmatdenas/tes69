@@ -159,14 +159,13 @@ optgroup option {
 #details .sunting-link {
   text-decoration: none;
   color: #888;
-  padding: 0 4px;        
+  margin-left: 5px;      
   border-radius: 2px;    
 }
 
 #details .sunting-linktambah {
   text-decoration: none;
-  color: #888;
-  padding: 0;        
+  color: #888;   
   border-radius: 2px;    
 }
 #details .sunting-link:hover, #details .sunting-linktambah:hover {
