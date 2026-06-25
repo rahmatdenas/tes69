@@ -447,7 +447,17 @@ function generateFilterSelect() {
   currentSearchQuery = '';
 
   let selectKombinasi = document.getElementById('filter-sort-kombinasi');
-  if (selectKombinasi) selectKombinasi.value = 'default';
+  if (selectKombinasi) {
+    selectKombinasi.value = 'default';
+    
+    // === PINDAHKAN LOGIKA SEMBUNYI/MUNCUL KE SINI ===
+    // Di titik ini, aplikasi sudah 100% tahu ini entitas Alam atau Bangunan
+    if (currentKategoriUtama === 'alam' || currentKategoriUtama === 'wilayah') {
+      selectKombinasi.style.display = 'none';
+    } else {
+      selectKombinasi.style.display = ''; // Munculkan kembali
+    }
+  }
 
   let searchInput = document.getElementById('search-input');
   if (searchInput) searchInput.value = '';
