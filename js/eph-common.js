@@ -86,8 +86,11 @@ function setupLandingForm() {
 
 function resetApp() {
   // 1. Bunuh Koneksi yang Sedang Berjalan
-  if (activeXhrs.length > 0) {
-    activeXhrs.forEach(xhr => xhr.abort());
+if (activeXhrs.length > 0) {
+    activeXhrs.forEach(xhr => {
+      xhr.isAbortedManually = true; // TANDAI: Ini pembatalan sengaja!
+      xhr.abort();
+    });
     activeXhrs = []; 
   }
 
@@ -237,7 +240,7 @@ Cluster = new L.markerClusterGroup({
       Map.fitBounds(cluster.getBounds());
     }
   });
-  
+}
 
 function queryWdqsThenProcess(query, processEachResult, postprocessCallback) {
   let promise = new Promise((resolve, reject) => {
@@ -251,10 +254,16 @@ function queryWdqsThenProcess(query, processEachResult, postprocessCallback) {
       let index = activeXhrs.indexOf(xhr);
       if (index > -1) activeXhrs.splice(index, 1);
 
-      if (xhr.status === 200) {
+if (xhr.status === 200) {
         resolve(JSON.parse(xhr.responseText));
       } else if (xhr.status === 0) {
-        reject('ABORTED');
+        // Cek apakah ini sengaja dibatalkan
+        if (xhr.isAbortedManually) {
+          reject('ABORTED');
+        } else {
+          // Jika tidak ada tanda sengaja, berarti ini murni masalah jaringan!
+          reject('NETWORK_ERROR'); 
+        }
       } else {
         reject(xhr.status);
       }
