@@ -561,8 +561,8 @@ const labelKamus = {
     caraList: 'Cara pembuatan', penutur: 'Jumlah penutur', tglWafat: 'Tanggal wafat',
     pekerjaanList: 'Pekerjaan', pegunungan: 'Bagian dari', korban: 'Korban jiwa',
     agamaList: 'Agama', bagianDari: 'Bagian dari',
-  pencipta: 'Pencipta',
-    panjang: 'Panjang',
+  pencipta: 'Pencipta', genreList: 'Genre',
+    panjang: 'Panjang', koleksiKaryaList: 'Tempat koleksi karya disimpan',
     tinggi: 'Tinggi', lebar: 'Lebar',
     aksaraList: 'Sistem penulisan'
   };
