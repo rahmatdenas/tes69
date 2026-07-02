@@ -257,6 +257,10 @@ function populateProvinceTypesData() {
   let wilayahClause1 = '';
   let unionEkstra = ''; 
 let hierarkiLokasi = '?l wdt:P131* ?p .'; 
+    let kurungBuka = '';
+  let kurungTutup = '';
+  const klasterKhususNasional = ['Gempa bumi dan tsunami', 'Peristiwa lainnya', 'Publikasi', 'Lukisan'];
+  let isKhususNasional = klasterKhususNasional.includes(currentNamaKlaster);
 let filterNasional = '?s wdt:P17 wd:Q252 .';
 if (currentNamaKlaster === 'Publikasi') {
   filterNasional = '?s wdt:P407 wd:Q9240 .';
