@@ -256,31 +256,18 @@ function populateProvinceTypesData() {
   let propTahun = dapatkanPropertiTahun(currentNamaKlaster);
   let wilayahClause1 = '';
   let unionEkstra = ''; 
-  let hierarkiLokasi = '?p131Lokasi wdt:P131* ?provinsi .'; 
-  
-  // === VARIABEL BUKA-TUTUP KURUNG ===
-  let kurungBuka = '';
-  let kurungTutup = '';
-
-// === BLOK BARU: SAKELAR KLASTER KHUSUS ===
-const klasterKhususNasional = ['Gempa bumi dan tsunami', 'Peristiwa lainnya', 'Publikasi', 'Lukisan'];
-let isKhususNasional = klasterKhususNasional.includes(currentNamaKlaster);
-
-// Tentukan filter nasional berdasarkan klaster
-let filterNasional = '?site wdt:P17 wd:Q252 .'; // default: filter negara Indonesia
+let hierarkiLokasi = '?l wdt:P131* ?p .'; 
+let filterNasional = '?s wdt:P17 wd:Q252 .';
 if (currentNamaKlaster === 'Publikasi') {
-  filterNasional = '?site wdt:P407 wd:Q9240 .'; // filter bahasa Indonesia
+  filterNasional = '?s wdt:P407 wd:Q9240 .';
 }
-
+// ...
 if (provInput === 'all') {
-  wilayahClause1 = '?provinsi wdt:P31 wd:Q5098 .';
-  if (isKhususNasional) {
-    baseQuery = KUMPULAN_KUERI_0['khusus_negara_all'];
-  }
+  wilayahClause1 = '?p wdt:P31 wd:Q5098 .';
+// ...
 } else {
-    // JIKA PROVINSI SPESIFIK DIPILIH (Logika lama tetap berjalan utuh)
-    wilayahClause1 = `?provinsi wdt:P131 ${provInput}.`;
-    let wilayahClause2 = `BIND(${provInput} AS ?provinsi) BIND(${provInput} AS ?p131Lokasi)`; 
+    wilayahClause1 = `?p wdt:P131 ${provInput}.`;
+    let wilayahClause2 = `BIND(${provInput} AS ?p) BIND(${provInput} AS ?l)`; 
     
     kurungBuka = '{';
     kurungTutup = '}';
@@ -288,10 +275,10 @@ if (provInput === 'all') {
     unionEkstra = `
     UNION {
       ${wilayahClause2}
-      ?site wdt:P31 ?jenis ;
-            wdt:${propLokasi} ?p131Lokasi .
+      ?s wdt:P31 ?j ;
+         wdt:${propLokasi} ?l .
     }`;
-  }
+}
   
   let dynamicQuery = baseQuery
     .replace(/<PLACEHOLDER_FILTER_NASIONAL>/g, filterNasional)
