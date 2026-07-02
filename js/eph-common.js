@@ -255,7 +255,7 @@ function queryWdqsThenProcess(query, processEachResult, postprocessCallback) {
       let index = activeXhrs.indexOf(xhr);
       if (index > -1) activeXhrs.splice(index, 1);
 
-if (xhr.status === 200) {
+      if (xhr.status === 200) {
         resolve(JSON.parse(xhr.responseText));
       } else if (xhr.status === 0) {
         // Cek apakah ini sengaja dibatalkan
@@ -269,10 +269,17 @@ if (xhr.status === 200) {
         reject(xhr.status);
       }
     };
+    
     xhr.open('POST', WDQS_API_URL, true);
-    xhr.overrideMimeType('text/plain');
+    
+    // --- KUNCI PERBAIKAN CORS ---
+    // 1. Matikan overrideMimeType karena memicu Preflight CORS
+    // 2. Matikan Api-User-Agent khusus (WDQS Blazegraph sering menolak ini dari browser)
+    // 3. Cukup gunakan header standar agar menjadi "CORS Simple Request"
+    
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.setRequestHeader('Api-User-Agent', 'WikiSurau/1.0 (mailto:rahmatdenas@gmail.com)');
+    xhr.setRequestHeader('Accept', 'application/sparql-results+json');
+    
     if (SparqlValuesClause) query = query.replace('<SPARQLVALUESCLAUSE>', SparqlValuesClause);
     xhr.send('format=json&query=' + encodeURIComponent(query));
   });
