@@ -63,7 +63,7 @@ body {
 #branding-icon {
   width: 45px; /* Silakan sesuaikan ukuran ini jika ikonnya terlalu besar/kecil */
   height: 45px;
-  margin-left: 15px; /* Jarak antara ikon dan blok teks di kanannya */
+  margin-left: auto; /* Jarak antara ikon dan blok teks di kanannya */
   object-fit: contain; /* Memastikan ikon tidak gepeng/distorsi */
 }
 
